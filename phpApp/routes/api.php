@@ -18,3 +18,7 @@ Route::group(['prefix' => '/v1', 'middleware' => 'auth:api'], function () {
         return $request->user();
     });
 });
+
+Route::group(['prefix' => '/v1/auth'], function () {
+    Route::post('/login', '\App\Http\Controllers\Api\LoginController@login');
+});
