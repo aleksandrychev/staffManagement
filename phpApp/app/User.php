@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use DCN\RBAC\Traits\HasRoleAndPermission;
+use DCN\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
 /**
  * App\User
@@ -28,9 +30,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereApiToken($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements HasRoleAndPermissionContract
 {
-    use Notifiable;
+    use Notifiable, HasRoleAndPermission;
 
     /**
      * The attributes that are mass assignable.
