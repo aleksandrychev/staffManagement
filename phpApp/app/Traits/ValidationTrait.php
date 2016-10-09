@@ -18,7 +18,6 @@ trait ValidationTrait
     {
         // make a new validator object
         $v = Validator::make($data, $this->rules);
-
         // check for failure
         if ($v->fails())
         {
@@ -26,7 +25,6 @@ trait ValidationTrait
             $this->errors = $v->errors();
             return false;
         }
-
         // validation pass
         return true;
     }

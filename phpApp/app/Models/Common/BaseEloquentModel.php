@@ -13,6 +13,11 @@ use App\Traits\ValidationTrait;
 use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * App\Models\Common\BaseEloquentModel
+ *
+ * @mixin \Eloquent
+ */
 class BaseEloquentModel extends Model
 {
     use ValidationTrait;

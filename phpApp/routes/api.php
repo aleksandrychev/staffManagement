@@ -27,6 +27,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['auth:api','role:staff']], fun
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::resource('/task', 'Api\TasksController');
 });
 
 

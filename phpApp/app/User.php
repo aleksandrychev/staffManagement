@@ -52,6 +52,9 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
         'password', 'remember_token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function account()
     {
         return $this->hasOne('App\Models\Accounts', 'id', 'account_id');
