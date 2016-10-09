@@ -9,34 +9,13 @@
 namespace App\Models\Common;
 
 
+use App\Traits\ValidationTrait;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Support\Facades\Validator;
+
 
 class BaseEloquentModel extends Model
 {
+    use ValidationTrait;
     protected $rules = [];
 
-    protected $errors;
-
-    public function validate($data)
-    {
-        // make a new validator object
-        $v = Validator::make($data, $this->rules);
-
-        // check for failure
-        if ($v->fails())
-        {
-            // set errors and return false
-            $this->errors = $v->errors();
-            return false;
-        }
-
-        // validation pass
-        return true;
-    }
-
-    public function errors()
-    {
-        return $this->errors;
-    }
 }

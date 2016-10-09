@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Accounts;
+use App\Http\Controllers\BaseApiController;
+use App\Models\Accounts\AccountSearch;
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class AccountsController extends Controller
+class AccountsController extends BaseApiController
 {
     public function index(Request $request)
     {
-        $accounts = Accounts::query()->paginate(5);
+        $searchModel = new AccountSearch($request);
+        $accounts = $searchModel->search();
+        $accounts = $accounts->paginate($this->perPage);
 
         return $accounts;
     }
