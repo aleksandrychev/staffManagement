@@ -21,14 +21,11 @@ class AccountSearch extends BaseSearchModel
         'contact_person_email' => 'string',
         'name' => 'string',
         'contact_person_name' => 'string',
+        'created_at' => 'string',
     ];
-
-    public $name;
-    public $id;
 
     public function search()
     {
-
         $query = Accounts::query();
 
         if (!$this->validate($this->request->all())) {
@@ -48,8 +45,10 @@ class AccountSearch extends BaseSearchModel
         if ($this->id) {
             $query->where('id', '=', $this->id);
         }
+        if ($this->created_at) {
+            $query->where('created_at', '=', $this->created_at);
+        }
         $query = $this->setOrder($query);
-
 
         return $query;
     }

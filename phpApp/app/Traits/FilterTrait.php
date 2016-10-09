@@ -16,14 +16,11 @@ trait FilterTrait
 
     protected function fillVariables(Request $request)
     {
-
         $keys = array_keys($this->rules);
         $variables = $request->only($keys);
 
         foreach ($variables as $key => $value) {
                 @$this->$key = $value;
         }
-
     }
-
 }

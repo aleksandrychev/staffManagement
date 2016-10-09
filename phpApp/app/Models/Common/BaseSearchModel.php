@@ -17,6 +17,7 @@ class BaseSearchModel
 {
     use FilterTrait, ValidationTrait;
     protected $request;
+    protected $rules = [];
 
     public function __construct(Request $request)
     {
@@ -29,10 +30,13 @@ class BaseSearchModel
             $orderStatements = explode(',', $this->request->get('order'));
             foreach ($orderStatements as $statement) {
                 $statement = explode(':', $statement);
+                if(!isset($this->rules[$statement[0]]) || !in_array($statement[1], ['asc','desc'])){
+                    continue;
+                }
                 if ($statement[1] == 'asc') {
-                    $query->orderBy('id', 'asc');
+                    $query->orderBy($statement[0], 'asc');
                 } elseif ($statement[1] == 'desc') {
-                    $query->orderBy('id', 'desc');
+                    $query->orderBy($statement[0], 'desc');
                 }
             }
         }
