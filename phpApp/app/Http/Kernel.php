@@ -54,5 +54,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role' => \DCN\RBAC\Middleware\VerifyRole::class,
         'permission' => \DCN\RBAC\Middleware\VerifyPermission::class,
+        'set.request.user.id' => \App\Http\Middleware\SetUserId::class,
     ];
 }

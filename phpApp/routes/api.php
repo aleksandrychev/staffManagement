@@ -28,6 +28,8 @@ Route::group(['prefix' => '/v1', 'middleware' => ['auth:api','role:staff']], fun
         return $request->user();
     });
     Route::resource('/task', 'Api\TasksController');
+
+    Route::resource('/task.comment', 'Api\TaskCommentsController');
 });
 
 
