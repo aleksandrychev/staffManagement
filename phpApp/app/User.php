@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DCN\RBAC\Traits\HasRoleAndPermission;
-use DCN\RBAC\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+use App\Traits\HasRoleAndPermission;
+use App\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
 /**
  * App\User

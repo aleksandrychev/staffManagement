@@ -1,6 +1,6 @@
 <?php
 
-namespace DCN\RBAC\Traits;
+namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
