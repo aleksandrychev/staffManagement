@@ -13,6 +13,27 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+/**
+ * SUPER ADMIN ROUTES
+ */
+Route::group(['prefix' => '/v1', 'middleware' => ['auth:api','role:super.admin']], function () {
+       Route::resource('/account', 'Api\AccountsController');
+});
+
+/**
+ * STAFF ROUTES
+ */
+Route::group(['prefix' => '/v1', 'middleware' => ['auth:api','role:staff']], function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::resource('/task', 'Api\TasksController');
+
+    Route::resource('/task.comment', 'Api\TaskCommentsController');
+});
+
+
+
+Route::group(['prefix' => '/v1/auth'], function () {
+    Route::post('/login', '\App\Http\Controllers\Api\LoginController@login');
+});
