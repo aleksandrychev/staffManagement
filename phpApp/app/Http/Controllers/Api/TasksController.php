@@ -28,6 +28,18 @@ class TasksController extends BaseApiController
         return $tasks;
     }
 
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null|static|static[]
+     */
+    public function show(Request $request, $id)
+    {
+        $task = Tasks::find($id);
+        return $task;
+    }
+
     /**
      * @param Request $request
      * @return Tasks
