@@ -14,10 +14,11 @@ trait ValidationTrait
 
     protected $errors;
 
-    public function validate($data)
+    public function validate($data, $rules = false)
     {
+        $rules = $rules == false ? $this->rules : $rules;
         // make a new validator object
-        $v = Validator::make($data, $this->rules);
+        $v = Validator::make($data, $rules);
         // check for failure
         if ($v->fails())
         {

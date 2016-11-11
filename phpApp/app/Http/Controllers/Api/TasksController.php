@@ -66,7 +66,9 @@ class TasksController extends BaseApiController
     {
         $model = Tasks::query()->where('id', '=', $id)->first();
         $model->fill($request->all());
-        if ($model->validate($request->all())) {
+        $t = new Tasks();
+        $rules = array_intersect_key($t->getRules(),$request->all());
+        if ($model->validate($request->all(), $rules)) {
             $model->save();
         } else {
             return $model->errors();

@@ -23,4 +23,8 @@ class BaseEloquentModel extends Model
     use ValidationTrait;
     protected $rules = [];
 
+    public function getRules(){
+        return $this->rules;
+    }
+
 }
