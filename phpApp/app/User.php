@@ -59,4 +59,12 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
     {
         return $this->hasOne('App\Models\Accounts', 'id', 'account_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function deviceTokens()
+    {
+        return $this->hasMany('App\Models\DeviceTokens\DeviceTokens', 'user_id', 'id');
+    }
 }

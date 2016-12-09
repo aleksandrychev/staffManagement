@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\AddTaskEvent;
 use App\Http\Controllers\BaseApiController;
 use App\Models\Tasks\Tasks;
 use App\Models\Tasks\TaskSearch;
@@ -49,7 +50,9 @@ class TasksController extends BaseApiController
         $model = new Tasks();
         $model->fill($request->all());
         if ($model->validate($request->all())) {
-            $model->save();
+            if($model->save()){
+                \Event::fire(new AddTaskEvent($model));
+            }
         } else {
             return $model->errors();
         }

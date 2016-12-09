@@ -4,12 +4,14 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
-        "dcn/rbac": "~1.1.0"
+        "dcn/rbac": "~1.1.0",
+        "sngrl/php-firebase-cloud-messaging": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
