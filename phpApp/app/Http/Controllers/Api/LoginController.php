@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ class LoginController extends Controller
         ]);
 
         if ($v->fails()) {
-            return $v->errors();
+            return response()->json($v->errors(), 409);
         }
 
         $credentials = $this->credentials($request);
@@ -38,7 +39,7 @@ class LoginController extends Controller
             $this->generateApiToken($user);
             return $user;
         } else {
-            return 'FAIL';
+            return response()->json(['email' => 'Email or password are wrong'], 409);
         }
 
     }

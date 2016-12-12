@@ -1,0 +1,39 @@
+<div class="panel" data-ng-controller="tasksCtrl">
+
+  <div class="panel-heading border">
+    <ol class="breadcrumb mb0 no-padding">
+      <li>
+        <a href="javascript:;">Home</a>
+      </li>
+      <li>
+        <a href="javascript:;">Tasks</a>
+      </li>
+
+    </ol>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+    <button class="btn btn-success pull-right" ng-click="addTask()">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      <translate>Add Task</translate>
+    </button>
+    </div>
+    <table class="table table-bordered bordered table-striped table-condensed "   >
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="task in tasks">
+        <td>{{task.id}}</td>
+        <td>{{task.name}}</td>
+        <td>{{task.description}}</td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
