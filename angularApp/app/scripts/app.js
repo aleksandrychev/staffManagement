@@ -19,7 +19,8 @@ angular
     'ngSanitize',
     'ui.utils',
     'ngTouch',
-    'ngMessages'
+    'ngMessages',
+    'ngMaterial',
   ])
   .constant('COLORS', {
     'default': '#e2e2e2',
@@ -33,5 +34,4 @@ angular
     border: '#e4e4e4',
     bodyBg: '#e0e8f2',
     textColor: '#6B6B6B',
-    apiUrl: "http://sm.loc/api/v1/"
   });

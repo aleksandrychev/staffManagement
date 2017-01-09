@@ -82,11 +82,12 @@ app
                   files: [
                     'vendor/chosen_v1.4.0/chosen.jquery.min.js',
                     'vendor/datatables/media/js/jquery.dataTables.js',
-                    'scripts/extentions/bootstrap-datatables.js',
-                    'scripts/services/apiClient.js'
+                    'scripts/extentions/bootstrap-datatables.js'
                   ]
                 }]).then(function () {
-                return $ocLazyLoad.load('scripts/controllers/tasks.js');
+                return $ocLazyLoad.load('scripts/controllers/tasks.js').then(function () {
+                  return $ocLazyLoad.load('scripts/services/apiClient.js');
+                });;
               });
             }]
           },

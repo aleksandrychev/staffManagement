@@ -11,7 +11,7 @@ function restApiCalls($q, $http) {
         deferred.resolve(data.data);
       })
       .error(function (data) {
-        deferred.reject(data);
+        deferred.reject(data.data);
       });
     return deferred.promise;
   };
@@ -23,7 +23,7 @@ function restApiCalls($q, $http) {
         deferred.resolve(data.data);
       })
       .error(function (data) {
-        deferred.reject(data);
+        deferred.reject(data.data);
       });
     return deferred.promise;
   };
@@ -37,8 +37,7 @@ function restApiCalls($q, $http) {
       deferred.resolve(data.data);
     })
       .error(function (data, status, header, config) {
-        console.log(data);
-        deferred.reject(data);
+        deferred.reject(data.data);
       });
     return deferred.promise;
   };
@@ -52,9 +51,9 @@ function restApiCalls($q, $http) {
       deferred.resolve(data.data);
     })
       .error(function (data, status, header, config) {
-        deferred.reject(data);
+        deferred.reject(data.data);
       });
-    return deferred.promise;
+      return deferred.promise;
   };
 
   return apiMethods;
