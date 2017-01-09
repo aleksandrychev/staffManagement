@@ -12,22 +12,25 @@
     </ol>
   </div>
   <div class="panel-body">
-    <div class="row">
-    <button class="btn btn-success pull-right" ng-click="addTask()">
+
+    <button class="btn btn-success pull-right" style="margin-bottom: 20px;" ng-click="addTask()">
       <i class="fa fa-plus" aria-hidden="true"></i>
       <translate>Add Task</translate>
     </button>
-    </div>
+
+
+
+
     <table class="table table-bordered bordered table-striped table-condensed "   >
       <thead>
       <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
+        <th><a ng-click="sortType='id'; sortReverse = !sortReverse">Id</a></th>
+        <th><a ng-click="sortType='name'; sortReverse = !sortReverse">Name</a></th>
+        <th><a ng-click="sortType='description'; sortReverse = !sortReverse">Description</a></th>
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="task in tasks">
+      <tr ng-repeat="task in tasks" ng-click="editTask(task.id)">
         <td>{{task.id}}</td>
         <td>{{task.name}}</td>
         <td>{{task.description}}</td>
@@ -35,5 +38,13 @@
       </tr>
       </tbody>
     </table>
+
+    <pagination class="pull-right"
+      ng-model="currentPage"
+      total-items="totalItems"
+      max-size="maxSize"
+      boundary-links="true">
+    </pagination>
+
   </div>
 </div>

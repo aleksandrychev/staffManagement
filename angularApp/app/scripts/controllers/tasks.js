@@ -1,25 +1,32 @@
 'use strict';
 
-function tasksCtrl($scope, $http, $log, $state) {
-  $http.get('http://sm.loc/api/v1/task', {
-    headers: {'Authorization': 'Bearer jMgY2zzQYtlRZot4n0Xife0ZV23QzVbgIzpZAuQkYRuXS4Bzw7XrlLgaaXUP'}
-  }).success(function (data, status, headers, config) {
-    $log.log(data.data.data);
-    $scope.tasks = data.data.data;
+function tasksCtrl($scope, $log, $state, apiClient) {
 
-    $scope.dataTableOpt = data.data;
-  })
-    .error(function (data, status, header, config) {
+  $scope.currentPage = 1;
+  $scope.numPerPage = 10;
+  $scope.maxSize = 5;
+  $scope.sortType = 'id';
+  $scope.sortReverse = false;
 
+
+  $scope.$watch("currentPage + numPerPage + sortType + sortReverse", function () {
+    var tasksPromise = apiClient.getTasks($scope.currentPage, $scope.sortType, $scope.sortReverse ? 'desc' : 'asc');
+    tasksPromise.then(function (response) {
+      $scope.tasks = response.data;
+      $scope.totalItems = response.total;
     });
-
+  });
   $scope.addTask = function () {
     $state.go('app.addTask');
   }
+
+  $scope.editTask = function (id) {
+    $state.go('app.editTask', {"id": id});
+  }
+
 }
 
-function tasksAddCtrl($scope, $http, $log) {
-
+function taskAddCtrl($scope, $state, apiClient) {
 
   $scope.submit = function () {
     var taskData = {
@@ -31,20 +38,44 @@ function tasksAddCtrl($scope, $http, $log) {
       "account_id": 1
     };
 
-    $http.post('http://sm.loc/api/v1/task', taskData, {
-      headers: {'Authorization': 'Bearer kUVVN5X89Apnzu5sy0Xq6YinfEUhzIA3jPEW1R6MqGOlwrtw6V1GaAepmV0t'}
-    }).success(function (data, status, headers, config) {
-      $log.log(data.data.data);
-      $scope.task = data.data.data;
+    var tasksCreatePromise = apiClient.createTask(taskData);
+    tasksCreatePromise.then(function (response) {
+      $scope.task = response.data;
+      // $state.go('app.editTask', {"id": response.id});
+    });
 
-      $scope.dataTableOpt = data.data;
-    })
-      .error(function (data, status, header, config) {
-
-      });
   };
 
 }
 
+function taskEditCtrl($scope, $stateParams, apiClient) {
+
+  var taskPromise = apiClient.getTask($stateParams.id);
+  taskPromise.then(function (response) {
+    $scope.task = response;
+
+
+    // $scope.id = response.data.id;
+    // $scope.description = response.data.description;
+    // $scope.implementer_id = response.data.implementer_id;
+    // $scope.status = response.data.status;
+  });
+
+
+  $scope.submit = function () {
+
+
+    var taskEditPromise = apiClient.editTask($stateParams.id, $scope.task);
+    taskPromise.then(function (response) {
+
+
+    });
+
+  };
+
+
+}
+
 app.controller('tasksCtrl', ['$scope', '$http', '$log', '$state', tasksCtrl]);
-app.controller('tasksAddCtrl', ['$scope', '$http', '$log', tasksAddCtrl]);
+app.controller('taskAddCtrl', ['$scope', '$http', '$log', taskAddCtrl]);
+app.controller('taskEditCtrl', ['$scope', '$http', '$stateParams', '$log', taskEditCtrl]);

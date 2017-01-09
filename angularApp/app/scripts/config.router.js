@@ -2,15 +2,15 @@
 
 app
   .run(['$rootScope', '$state', '$stateParams',
-        function ($rootScope, $state, $stateParams) {
+    function ($rootScope, $state, $stateParams) {
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
       $rootScope.$on('$stateChangeSuccess', function () {
         window.scrollTo(0, 0);
       });
       FastClick.attach(document.body);
-        },
-    ])
+    },
+  ])
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
 
@@ -25,44 +25,44 @@ app
         })
 
 
-      .state('app.dashboard', {
-        url: '/',
-        templateUrl: 'views/dashboard.html',
-        resolve: {
-          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              {
-                insertBefore: '#load_styles_before',
-                files: [
-                                'styles/climacons-font.css',
-                                'vendor/rickshaw/rickshaw.min.css'
-                            ]
-                        },
-              {
-                serie: true,
-                files: [
-                                'vendor/d3/d3.min.js',
-                                'vendor/rickshaw/rickshaw.min.js',
-                                'vendor/flot/jquery.flot.js',
-                                'vendor/flot/jquery.flot.resize.js',
-                                'vendor/flot/jquery.flot.pie.js',
-                                'vendor/flot/jquery.flot.categories.js',
-                            ]
-                        },
-              {
+        .state('app.dashboard', {
+          url: '/',
+          templateUrl: 'views/dashboard.html',
+          resolve: {
+            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+              return $ocLazyLoad.load([
+                {
+                  insertBefore: '#load_styles_before',
+                  files: [
+                    'styles/climacons-font.css',
+                    'vendor/rickshaw/rickshaw.min.css'
+                  ]
+                },
+                {
+                  serie: true,
+                  files: [
+                    'vendor/d3/d3.min.js',
+                    'vendor/rickshaw/rickshaw.min.js',
+                    'vendor/flot/jquery.flot.js',
+                    'vendor/flot/jquery.flot.resize.js',
+                    'vendor/flot/jquery.flot.pie.js',
+                    'vendor/flot/jquery.flot.categories.js',
+                  ]
+                },
+                {
                   name: 'angular-flot',
                   files: [
-                                'vendor/angular-flot/angular-flot.js'
-                            ]
-                        }]).then(function () {
-              return $ocLazyLoad.load('scripts/controllers/dashboard.js');
-            });
-                    }]
-        },
-        data: {
-          title: 'Dashboard',
-        }
-      })
+                    'vendor/angular-flot/angular-flot.js'
+                  ]
+                }]).then(function () {
+                return $ocLazyLoad.load('scripts/controllers/dashboard.js');
+              });
+            }]
+          },
+          data: {
+            title: 'Dashboard',
+          }
+        })
 
         .state('app.tasks', {
           url: '/tasks',
@@ -82,7 +82,8 @@ app
                   files: [
                     'vendor/chosen_v1.4.0/chosen.jquery.min.js',
                     'vendor/datatables/media/js/jquery.dataTables.js',
-                    'scripts/extentions/bootstrap-datatables.js'
+                    'scripts/extentions/bootstrap-datatables.js',
+                    'scripts/services/apiClient.js'
                   ]
                 }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/tasks.js');
@@ -96,7 +97,7 @@ app
 
         .state('app.addTask', {
           url: '/add-task',
-          templateUrl: 'views/tasks/task.html',
+          templateUrl: 'views/tasks/add.html',
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load([
@@ -108,7 +109,8 @@ app
                   files: [
                     'vendor/chosen_v1.4.0/chosen.jquery.min.js',
                     'vendor/datatables/media/js/jquery.dataTables.js',
-                    'scripts/extentions/bootstrap-datatables.js'
+                    'scripts/extentions/bootstrap-datatables.js',
+                    'scripts/services/apiClient.js'
                   ]
                 }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/tasks.js');
@@ -116,12 +118,39 @@ app
             }]
           },
           data: {
-            title: 'Add Tasks',
+            title: 'Add Task',
           }
         })
 
-      // UI Routes
-      .state('app.ui', {
+        .state('app.editTask', {
+          url: '/task/:id',
+          templateUrl: 'views/tasks/edit.html',
+          resolve: {
+            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+              return $ocLazyLoad.load([
+                {
+                  insertBefore: '#load_styles_before',
+                },
+                {
+                  serie: true,
+                  files: [
+                    'vendor/chosen_v1.4.0/chosen.jquery.min.js',
+                    'vendor/datatables/media/js/jquery.dataTables.js',
+                    'scripts/extentions/bootstrap-datatables.js',
+                    'scripts/services/apiClient.js'
+                  ]
+                }]).then(function () {
+                return $ocLazyLoad.load('scripts/controllers/tasks.js');
+              });
+            }]
+          },
+          data: {
+            title: 'Edit Task',
+          }
+        })
+
+        // UI Routes
+        .state('app.ui', {
           template: '<div ui-view></div>',
           abstract: true,
           url: '/ui',
@@ -142,19 +171,19 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/checkbo/src/0.1.4/css/checkBo.min.css',
-                                'vendor/chosen_v1.4.0/chosen.min.css'
-                            ]
-                        },
+                    'vendor/checkbo/src/0.1.4/css/checkBo.min.css',
+                    'vendor/chosen_v1.4.0/chosen.min.css'
+                  ]
+                },
                 {
                   files: [
-                                'vendor/checkbo/src/0.1.4/js/checkBo.min.js',
-                                'vendor/chosen_v1.4.0/chosen.jquery.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/checkbo/src/0.1.4/js/checkBo.min.js',
+                    'vendor/chosen_v1.4.0/chosen.jquery.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/bootstrap.ui.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Bootstrap Directives',
@@ -176,16 +205,16 @@ app
                 {
                   serie: true,
                   files: [
-                                'vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.js',
-                                'vendor/jquery.ui/ui/core.js',
-                                'vendor/jquery.ui/ui/widget.js',
-                                'vendor/jquery.ui/ui/mouse.js',
-                                'vendor/jquery.ui/ui/sortable.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/perfect-scrollbar/js/perfect-scrollbar.jquery.js',
+                    'vendor/jquery.ui/ui/core.js',
+                    'vendor/jquery.ui/ui/widget.js',
+                    'vendor/jquery.ui/ui/mouse.js',
+                    'vendor/jquery.ui/ui/sortable.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/draggable.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Portlets',
@@ -204,7 +233,7 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load('styles/feather.css');
-                    }]
+            }]
           },
           data: {
             title: 'Feather Icons',
@@ -216,7 +245,7 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load('styles/climacons-font.css');
-                    }]
+            }]
           },
           data: {
             title: 'Climacon Icons',
@@ -238,15 +267,15 @@ app
                 {
                   serie: true,
                   files: [
-                                'vendor/jquery.ui/ui/core.js',
-                                'vendor/jquery.ui/ui/widget.js',
-                                'vendor/jquery.ui/ui/mouse.js',
-                                'vendor/jquery.ui/ui/slider.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/jquery.ui/ui/core.js',
+                    'vendor/jquery.ui/ui/widget.js',
+                    'vendor/jquery.ui/ui/mouse.js',
+                    'vendor/jquery.ui/ui/slider.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/slider.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Sliders',
@@ -258,7 +287,7 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load('scripts/controllers/bootstrap.ui.js');
-                    }]
+            }]
           },
           data: {
             title: 'Pagination',
@@ -273,18 +302,18 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: ['vendor/chosen_v1.4.0/chosen.min.css']
-                        },
+                },
                 {
                   serie: true,
                   files: [
-                                'vendor/chosen_v1.4.0/chosen.jquery.min.js',
-                                'vendor/noty/js/noty/packaged/jquery.noty.packaged.min.js',
-                                'scripts/extentions/noty-defaults.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/chosen_v1.4.0/chosen.jquery.min.js',
+                    'vendor/noty/js/noty/packaged/jquery.noty.packaged.min.js',
+                    'scripts/extentions/noty-defaults.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/notifications.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Notifications',
@@ -299,17 +328,17 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: ['vendor/sweetalert/dist/sweetalert.css']
-                        },
+                },
                 {
                   name: 'oitozero.ngSweetAlert',
                   files: [
-                                'vendor/sweetalert/dist/sweetalert.min.js',
-                                'vendor/angular-sweetalert/SweetAlert.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/sweetalert/dist/sweetalert.min.js',
+                    'vendor/angular-sweetalert/SweetAlert.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/alert.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Alerts',
@@ -317,8 +346,8 @@ app
         })
 
 
-      // Forms routes
-      .state('app.forms', {
+        // Forms routes
+        .state('app.forms', {
           template: '<div ui-view></div>',
           abstract: true,
           url: '/forms',
@@ -339,37 +368,37 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css',
-                                'vendor/chosen_v1.4.0/chosen.min.css',
-                                'vendor/jquery.tagsinput/src/jquery.tagsinput.css',
-                                'vendor/checkbo/src/0.1.4/css/checkBo.min.css',
-                                'vendor/intl-tel-input/build/css/intlTelInput.css',
-                                'vendor/bootstrap-daterangepicker/daterangepicker-bs3.css',
-                                'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
-                                'vendor/bootstrap-timepicker/css/bootstrap-timepicker.min.css',
-                                'vendor/clockpicker/dist/bootstrap-clockpicker.min.css',
-                                'vendor/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css'
-                            ]
-                        },
+                    'vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css',
+                    'vendor/chosen_v1.4.0/chosen.min.css',
+                    'vendor/jquery.tagsinput/src/jquery.tagsinput.css',
+                    'vendor/checkbo/src/0.1.4/css/checkBo.min.css',
+                    'vendor/intl-tel-input/build/css/intlTelInput.css',
+                    'vendor/bootstrap-daterangepicker/daterangepicker-bs3.css',
+                    'vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
+                    'vendor/bootstrap-timepicker/css/bootstrap-timepicker.min.css',
+                    'vendor/clockpicker/dist/bootstrap-clockpicker.min.css',
+                    'vendor/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css'
+                  ]
+                },
                 {
                   serie: true,
                   files: [
-                                'vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js',
-                                'vendor/chosen_v1.4.0/chosen.jquery.min.js',
-                                'vendor/jquery.tagsinput/src/jquery.tagsinput.js',
-                                'vendor/checkbo/src/0.1.4/js/checkBo.min.js',
-                                'vendor/intl-tel-input//build/js/intlTelInput.min.js',
-                                'vendor/moment/min/moment.min.js',
-                                'vendor/bootstrap-daterangepicker/daterangepicker.js',
-                                'vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
-                                'vendor/bootstrap-timepicker/js/bootstrap-timepicker.min.js',
-                                'vendor/clockpicker/dist/jquery-clockpicker.min.js',
-                                'vendor/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js',
+                    'vendor/chosen_v1.4.0/chosen.jquery.min.js',
+                    'vendor/jquery.tagsinput/src/jquery.tagsinput.js',
+                    'vendor/checkbo/src/0.1.4/js/checkBo.min.js',
+                    'vendor/intl-tel-input//build/js/intlTelInput.min.js',
+                    'vendor/moment/min/moment.min.js',
+                    'vendor/bootstrap-daterangepicker/daterangepicker.js',
+                    'vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+                    'vendor/bootstrap-timepicker/js/bootstrap-timepicker.min.js',
+                    'vendor/clockpicker/dist/jquery-clockpicker.min.js',
+                    'vendor/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/form.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Advanced Form Plugins',
@@ -383,7 +412,7 @@ app
               return $ocLazyLoad.load('vendor/jquery-validation/dist/jquery.validate.min.js').then(function () {
                 return $ocLazyLoad.load('scripts/controllers/validation.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Form Validation',
@@ -398,23 +427,23 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/checkbo/src/0.1.4/css/checkBo.min.css',
-                                'vendor/chosen_v1.4.0/chosen.min.css'
-                            ]
-                        },
+                    'vendor/checkbo/src/0.1.4/css/checkBo.min.css',
+                    'vendor/chosen_v1.4.0/chosen.min.css'
+                  ]
+                },
                 {
                   files: [
-                                'vendor/checkbo/src/0.1.4/js/checkBo.min.js',
-                                'vendor/chosen_v1.4.0/chosen.jquery.min.js',
-                                'vendor/card/lib/js/jquery.card.js',
-                                'vendor/bootstrap/js/tab.js',
-                                'vendor/jquery-validation/dist/jquery.validate.min.js',
-                                'vendor/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/checkbo/src/0.1.4/js/checkBo.min.js',
+                    'vendor/chosen_v1.4.0/chosen.jquery.min.js',
+                    'vendor/card/lib/js/jquery.card.js',
+                    'vendor/bootstrap/js/tab.js',
+                    'vendor/jquery-validation/dist/jquery.validate.min.js',
+                    'vendor/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/wizard.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Form Wizards',
@@ -429,28 +458,28 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/summernote/dist/summernote.css',
-                                'vendor/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.min.css'
-                            ]
-                        },
+                    'vendor/summernote/dist/summernote.css',
+                    'vendor/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.min.css'
+                  ]
+                },
                 {
                   files: [
-                                'vendor/bootstrap/js/tooltip.js',
-                                'vendor/bootstrap/js/dropdown.js',
-                                'vendor/bootstrap/js/modal.js',
-                                'vendor/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.js',
-                                'vendor/summernote/dist/summernote.min.js'
-                            ]
-                        },
+                    'vendor/bootstrap/js/tooltip.js',
+                    'vendor/bootstrap/js/dropdown.js',
+                    'vendor/bootstrap/js/modal.js',
+                    'vendor/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.js',
+                    'vendor/summernote/dist/summernote.min.js'
+                  ]
+                },
                 {
                   name: 'summernote',
                   files: [
-                                'vendor/angular-summernote/dist/angular-summernote.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/angular-summernote/dist/angular-summernote.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/editor.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Form Editors',
@@ -464,7 +493,7 @@ app
               return $ocLazyLoad.load('vendor/jquery.maskedinput/dist/jquery.maskedinput.min.js').then(function () {
                 return $ocLazyLoad.load('scripts/controllers/mask.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Input Masks',
@@ -479,12 +508,12 @@ app
                 {
                   name: 'angularFileUpload',
                   files: [
-                                'vendor/angular-file-upload/angular-file-upload.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/angular-file-upload/angular-file-upload.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/upload.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Form Upload',
@@ -492,8 +521,8 @@ app
         })
 
 
-      // Tables routes
-      .state('app.tables', {
+        // Tables routes
+        .state('app.tables', {
           template: '<div ui-view></div>',
           abstract: true,
           url: '/tables',
@@ -507,17 +536,17 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/sortable/css/sortable-theme-bootstrap.css'
-                            ]
-                        },
+                    'vendor/sortable/css/sortable-theme-bootstrap.css'
+                  ]
+                },
                 {
                   files: [
-                                'vendor/sortable/js/sortable.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/sortable/js/sortable.min.js'
+                  ]
+                }]).then(function () {
                 Sortable.init();
               });
-                    }]
+            }]
           },
           data: {
             title: 'Basic Table',
@@ -539,21 +568,21 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/chosen_v1.4.0/chosen.min.css',
-                                'vendor/datatables/media/css/jquery.dataTables.css'
-                            ]
-                        },
+                    'vendor/chosen_v1.4.0/chosen.min.css',
+                    'vendor/datatables/media/css/jquery.dataTables.css'
+                  ]
+                },
                 {
                   serie: true,
                   files: [
-                                'vendor/chosen_v1.4.0/chosen.jquery.min.js',
-                                'vendor/datatables/media/js/jquery.dataTables.js',
-                                'scripts/extentions/bootstrap-datatables.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/chosen_v1.4.0/chosen.jquery.min.js',
+                    'vendor/datatables/media/js/jquery.dataTables.js',
+                    'scripts/extentions/bootstrap-datatables.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/table.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Datatable',
@@ -568,18 +597,18 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/angular-xeditable/dist/css/xeditable.css'
-                            ]
-                        },
+                    'vendor/angular-xeditable/dist/css/xeditable.css'
+                  ]
+                },
                 {
                   name: 'xeditable',
                   files: [
-                                'vendor/angular-xeditable/dist/js/xeditable.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/angular-xeditable/dist/js/xeditable.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/editable.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Editable Table',
@@ -587,8 +616,8 @@ app
         })
 
 
-      // Chart routes
-      .state('app.charts', {
+        // Chart routes
+        .state('app.charts', {
           template: '<div ui-view></div>',
           abstract: true,
           url: '/charts',
@@ -602,25 +631,25 @@ app
                 {
                   serie: true,
                   files: [
-                                'vendor/flot/jquery.flot.js',
-                                'vendor/flot/jquery.flot.resize.js',
-                                'vendor/flot/jquery.flot.categories.js',
-                                'vendor/flot/jquery.flot.stack.js',
-                                'vendor/flot/jquery.flot.time.js',
-                                'vendor/flot/jquery.flot.pie.js',
-                                'vendor/flot-spline/js/jquery.flot.spline.js',
-                                'vendor/flot.orderbars/js/jquery.flot.orderBars.js'
-                            ]
-                        },
+                    'vendor/flot/jquery.flot.js',
+                    'vendor/flot/jquery.flot.resize.js',
+                    'vendor/flot/jquery.flot.categories.js',
+                    'vendor/flot/jquery.flot.stack.js',
+                    'vendor/flot/jquery.flot.time.js',
+                    'vendor/flot/jquery.flot.pie.js',
+                    'vendor/flot-spline/js/jquery.flot.spline.js',
+                    'vendor/flot.orderbars/js/jquery.flot.orderBars.js'
+                  ]
+                },
                 {
                   name: 'angular-flot',
                   files: [
-                                'vendor/angular-flot/angular-flot.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/angular-flot/angular-flot.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/flot.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Flot Charts',
@@ -635,12 +664,12 @@ app
                 {
                   name: 'easypiechart',
                   files: [
-                                'vendor/jquery.easy-pie-chart/dist/angular.easypiechart.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/jquery.easy-pie-chart/dist/angular.easypiechart.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/easychart.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Easypie Charts',
@@ -652,21 +681,21 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load([
-                 {
+                {
                   files: [
-                                'vendor/chartjs/Chart.js',
-                            ]
-                        },
+                    'vendor/chartjs/Chart.js',
+                  ]
+                },
                 {
                   name: 'angles',
                   serie: true,
                   files: [
-                                'vendor/angles/angles.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/angles/angles.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/chartjs.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Chartjs',
@@ -681,19 +710,19 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/rickshaw/rickshaw.min.css'
-                            ]
-                        },
+                    'vendor/rickshaw/rickshaw.min.css'
+                  ]
+                },
                 {
                   serie: true,
                   files: [
-                                'vendor/d3/d3.min.js',
-                                'vendor/rickshaw/rickshaw.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/d3/d3.min.js',
+                    'vendor/rickshaw/rickshaw.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/rickshaw.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Rickshaw Charts',
@@ -708,21 +737,21 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/nvd3/nv.d3.min.css'
-                            ]
-                        },
+                    'vendor/nvd3/nv.d3.min.css'
+                  ]
+                },
                 {
                   name: 'nvd3',
                   serie: true,
                   files: [
-                                'vendor/d3/d3.min.js',
-                                'vendor/nvd3/nv.d3.min.js',
-                                'vendor/angular-nvd3/dist/angular-nvd3.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/d3/d3.min.js',
+                    'vendor/nvd3/nv.d3.min.js',
+                    'vendor/angular-nvd3/dist/angular-nvd3.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/nvd3.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Nvd3 Charts',
@@ -737,19 +766,19 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/c3/c3.min.css'
-                            ]
-                        },
+                    'vendor/c3/c3.min.css'
+                  ]
+                },
                 {
                   serie: true,
                   files: [
-                                'vendor/d3/d3.min.js',
-                                'vendor/c3/c3.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/d3/d3.min.js',
+                    'vendor/c3/c3.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/c3.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'C3',
@@ -757,8 +786,8 @@ app
         })
 
 
-      // Maps routes
-      .state('app.maps', {
+        // Maps routes
+        .state('app.maps', {
           template: '<div ui-view></div>',
           abstract: true,
           url: '/maps',
@@ -772,12 +801,12 @@ app
                 {
                   name: 'ui.map',
                   files: [
-                                'vendor/angular-ui-map/ui-map.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/angular-ui-map/ui-map.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/google.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Google Maps',
@@ -793,19 +822,19 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/bower-jvectormap/jquery-jvectormap-1.2.2.css'
-                            ]
-                        },
+                    'vendor/bower-jvectormap/jquery-jvectormap-1.2.2.css'
+                  ]
+                },
                 {
                   serie: true,
                   files: [
-                                'vendor/bower-jvectormap/jquery-jvectormap-1.2.2.min.js',
-                                'data/maps/jquery-jvectormap-world-mill-en.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/bower-jvectormap/jquery-jvectormap-1.2.2.min.js',
+                    'data/maps/jquery-jvectormap-world-mill-en.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/vector.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Vector Maps',
@@ -814,8 +843,8 @@ app
         })
 
 
-      // Apps routes
-      .state('app.apps', {
+        // Apps routes
+        .state('app.apps', {
           template: '<div ui-view></div>',
           abstract: true,
           url: '/apps',
@@ -829,30 +858,30 @@ app
                 {
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/fullcalendar/dist/fullcalendar.min.css'
-                            ]
-                        },
+                    'vendor/fullcalendar/dist/fullcalendar.min.css'
+                  ]
+                },
                 {
                   serie: true,
                   files: [
-                                'vendor/jquery.ui/ui/core.js',
-                                'vendor/jquery.ui/ui/widget.js',
-                                'vendor/jquery.ui/ui/mouse.js',
-                                'vendor/jquery.ui/ui/draggable.js',
-                                'vendor/moment/moment.js',
-                                'vendor/fullcalendar/dist/fullcalendar.min.js',
-                                'vendor/fullcalendar/dist/gcal.js'
-                            ]
-                        },
+                    'vendor/jquery.ui/ui/core.js',
+                    'vendor/jquery.ui/ui/widget.js',
+                    'vendor/jquery.ui/ui/mouse.js',
+                    'vendor/jquery.ui/ui/draggable.js',
+                    'vendor/moment/moment.js',
+                    'vendor/fullcalendar/dist/fullcalendar.min.js',
+                    'vendor/fullcalendar/dist/gcal.js'
+                  ]
+                },
                 {
                   name: 'ui.calendar',
                   files: [
-                                'vendor/angular-ui-calendar/src/calendar.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/angular-ui-calendar/src/calendar.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/calendar.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Calendar',
@@ -868,20 +897,20 @@ app
                   serie: true,
                   insertBefore: '#load_styles_before',
                   files: [
-                                'vendor/blueimp-gallery/css/blueimp-gallery.min.css',
-                                'vendor/blueimp-bootstrap-image-gallery/css/bootstrap-image-gallery.min.css'
-                            ]
-                        },
+                    'vendor/blueimp-gallery/css/blueimp-gallery.min.css',
+                    'vendor/blueimp-bootstrap-image-gallery/css/bootstrap-image-gallery.min.css'
+                  ]
+                },
                 {
                   serie: true,
                   files: [
-                                'vendor/blueimp-gallery/js/jquery.blueimp-gallery.min.js',
-                                'vendor/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/blueimp-gallery/js/jquery.blueimp-gallery.min.js',
+                    'vendor/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/gallery.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Gallery',
@@ -895,7 +924,7 @@ app
               return $ocLazyLoad.load('scripts/controllers/messages.js').then(function () {
                 return $ocLazyLoad.load('scripts/services/messages.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Messages',
@@ -912,8 +941,8 @@ app
         })
 
 
-      // Apps routes
-      .state('app.extras', {
+        // Apps routes
+        .state('app.extras', {
           template: '<div ui-view></div>',
           abstract: true,
           url: '/extras',
@@ -948,15 +977,15 @@ app
                 {
                   serie: true,
                   files: [
-                                'vendor/jquery.ui/ui/core.js',
-                                'vendor/jquery.ui/ui/widget.js',
-                                'vendor/jquery.ui/ui/mouse.js',
-                                'vendor/jquery.ui/ui/sortable.js'
-                            ]
-                        }]).then(function () {
+                    'vendor/jquery.ui/ui/core.js',
+                    'vendor/jquery.ui/ui/widget.js',
+                    'vendor/jquery.ui/ui/mouse.js',
+                    'vendor/jquery.ui/ui/sortable.js'
+                  ]
+                }]).then(function () {
                 return $ocLazyLoad.load('scripts/controllers/sortable.js');
               });
-                    }]
+            }]
           },
           data: {
             title: 'Sortable',
@@ -968,7 +997,7 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load('vendor/nestable/jquery.nestable.js');
-                    }]
+            }]
           },
           data: {
             title: 'Nestable',
@@ -997,33 +1026,33 @@ app
         })
 
 
-      .state('app.widgets', {
-        url: '/widgets',
-        templateUrl: 'views/widgets.html',
-        resolve: {
-          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              {
-                insertBefore: '#load_styles_before',
-                files: [
-                                'styles/climacons-font.css',
-                                'vendor/checkbo/src/0.1.4/css/checkBo.min.css'
-                            ]
-                        },
-              {
-                files: [
-                                'vendor/checkbo/src/0.1.4/js/checkBo.min.js'
-                            ]
-                        }]);
-                    }]
-        },
-        data: {
-          title: 'Widgets',
-        }
-      })
+        .state('app.widgets', {
+          url: '/widgets',
+          templateUrl: 'views/widgets.html',
+          resolve: {
+            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+              return $ocLazyLoad.load([
+                {
+                  insertBefore: '#load_styles_before',
+                  files: [
+                    'styles/climacons-font.css',
+                    'vendor/checkbo/src/0.1.4/css/checkBo.min.css'
+                  ]
+                },
+                {
+                  files: [
+                    'vendor/checkbo/src/0.1.4/js/checkBo.min.js'
+                  ]
+                }]);
+            }]
+          },
+          data: {
+            title: 'Widgets',
+          }
+        })
 
 
-      .state('user', {
+        .state('user', {
           templateUrl: 'views/common/session.html',
         })
         .state('user.signin', {
@@ -1032,7 +1061,7 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load('scripts/controllers/session.js');
-                    }]
+            }]
           },
           data: {
             appClasses: 'bg-white usersession',
@@ -1045,7 +1074,7 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load('scripts/controllers/session.js');
-                    }]
+            }]
           },
           data: {
             appClasses: 'bg-white usersession',
@@ -1058,7 +1087,7 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load('scripts/controllers/session.js');
-                    }]
+            }]
           },
           data: {
             appClasses: 'bg-white usersession',
@@ -1066,7 +1095,7 @@ app
           }
         })
 
-      .state('app.404', {
+        .state('app.404', {
           url: '/404',
           templateUrl: 'views/extras-404.html',
           data: {
@@ -1088,7 +1117,7 @@ app
           resolve: {
             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
               return $ocLazyLoad.load('scripts/controllers/session.js');
-                    }]
+            }]
           },
           data: {
             appClasses: 'usersession',
@@ -1097,31 +1126,31 @@ app
         })
 
 
-      .state('app.documentation', {
-        url: '/documentation',
-        templateUrl: 'views/docs.html',
-        resolve: {
-          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              {
-                serie: true,
-                files: [
-                                'vendor/prism/themes/prism.css',
-                                'vendor/prism/prism.js',
-                            ]
-                        }]);
-                    }]
-        },
-        data: {
-          title: 'Documentation',
-          contentClasses: 'no-padding'
-        }
-      });
-        }
-    ])
+        .state('app.documentation', {
+          url: '/documentation',
+          templateUrl: 'views/docs.html',
+          resolve: {
+            deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+              return $ocLazyLoad.load([
+                {
+                  serie: true,
+                  files: [
+                    'vendor/prism/themes/prism.css',
+                    'vendor/prism/prism.js',
+                  ]
+                }]);
+            }]
+          },
+          data: {
+            title: 'Documentation',
+            contentClasses: 'no-padding'
+          }
+        });
+    }
+  ])
   .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
       debug: false,
       events: false
     });
-    }]);
+  }]);
