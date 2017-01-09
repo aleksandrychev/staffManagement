@@ -54,7 +54,7 @@ class TasksController extends BaseApiController
                 \Event::fire(new AddTaskEvent($model));
             }
         } else {
-            return $model->errors();
+            return response()->json($model->errors(), 422);
         }
 
         return $model;
