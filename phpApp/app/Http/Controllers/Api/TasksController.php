@@ -74,7 +74,7 @@ class TasksController extends BaseApiController
         if ($model->validate($request->all(), $rules)) {
             $model->save();
         } else {
-            return $model->errors();
+            return response()->json($model->errors(), 422);
         }
         return $model;
     }
