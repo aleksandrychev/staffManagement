@@ -7,8 +7,8 @@ app
       $scope.mobileView = 767;
 
       $scope.app = {
-        name: 'Urban',
-        author: 'Nyasha',
+        name: 'Staff Management',
+        author: 'Ihor Aleksandrychiev',
         version: '1.0.0',
         year: (new Date()).getFullYear(),
         layout: {
@@ -29,10 +29,11 @@ app
         isConfigOpen: false
       };
 
+      var user = JSON.parse(localStorage.getItem("user"));
       $scope.user = {
-        fname: 'Samuel',
-        lname: 'Perkins',
-        jobDesc: 'Human Resources Guy',
+        fname:  user.name,
+        lname:  user.email,
+        jobDesc: user.role,
         avatar: 'images/avatar.jpg',
       };
 
