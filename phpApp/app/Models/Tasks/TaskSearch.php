@@ -13,8 +13,13 @@ use App\Models\Common\BaseSearchModel;
 
 class TaskSearch extends BaseSearchModel
 {
+    public $orderBy = 'id';
+    public $orderType = 'asc';
+
     protected $rules = array(
         'description' => 'string',
+        'orderBy' => 'string',
+        'orderType' => 'string',
         'implementer_id' => 'integer',
         'name' => 'string|max:75',
         'user_id' => 'integer',
@@ -32,6 +37,8 @@ class TaskSearch extends BaseSearchModel
             return $query;
         }
         $this->fillVariables($this->request);
+
+        $query->orderBy($this->orderBy, $this->orderType);
 
         if ($this->name) {
             $query->where('name', 'like', SearchHelper::prepareLikeValue($this->name));
