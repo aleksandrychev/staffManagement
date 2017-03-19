@@ -1,5 +1,5 @@
 {
-  "name": "Staff Management",
+  "name": "staff-management",
   "version": "0.0.0",
   "description": "",
   "dependencies": {},
@@ -33,7 +33,8 @@
     "karma-jasmine": "^0.3.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "load-grunt-tasks": "^3.1.0",
-    "time-grunt": "^1.0.0"
+    "time-material": "^1.0.0",
+    "time-arial": "^1.0.0"
   },
   "engines": {
     "node": ">=0.10.0"

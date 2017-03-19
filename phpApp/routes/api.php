@@ -33,6 +33,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['auth:api','role:staff']], fun
     Route::delete('/profile/device-token/{token}', 'Api\ProfileController@destroyDeviceToken');
 
     Route::resource('/task.comment', 'Api\TaskCommentsController');
+    Route::resource('/location', 'Api\StaffLocations');
 });
 
 

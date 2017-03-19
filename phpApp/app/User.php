@@ -29,6 +29,19 @@ use App\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereApiToken($value)
  * @mixin \Eloquent
+ * @property int $account_id
+ * @property string $status
+ * @property string $role
+ * @property string $phone
+ * @property-read \App\Models\Accounts\Accounts $account
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DeviceTokens\DeviceTokens[] $deviceTokens
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\DCN\RBAC\Models\Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\DCN\RBAC\Models\Permission[] $userPermissions
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAccountId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRole($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePhone($value)
  */
 class User extends Authenticatable implements HasRoleAndPermissionContract
 {
@@ -57,7 +70,7 @@ class User extends Authenticatable implements HasRoleAndPermissionContract
      */
     public function account()
     {
-        return $this->hasOne('App\Models\Accounts', 'id', 'account_id');
+        return $this->hasOne('App\Models\Accounts\Accounts', 'id', 'account_id');
     }
 
     /**

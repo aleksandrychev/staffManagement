@@ -27,6 +27,9 @@ use App\Models\Common\BaseEloquentModel;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Tasks\Tasks whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Tasks\Tasks whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Accounts\Accounts $account
+ * @property-read \App\Models\Users\User $owner
+ * @property-read \App\Models\Users\User $implementer
  */
 class Tasks extends BaseEloquentModel
 {
@@ -60,7 +63,7 @@ class Tasks extends BaseEloquentModel
      */
     public function account()
     {
-        return $this->hasOne('App\Models\Accounts', 'id', 'account_id');
+        return $this->hasOne('App\Models\Accounts\Accounts', 'id', 'account_id');
     }
 
     /**

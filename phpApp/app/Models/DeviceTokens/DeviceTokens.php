@@ -8,6 +8,18 @@ use App\Models\Common\BaseEloquentModel;
  *
  * @property string $token
  * @property string $os
+ * @property int $id
+ * @property int $user_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\Models\Users\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\DeviceTokens\DeviceTokens whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\DeviceTokens\DeviceTokens whereToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\DeviceTokens\DeviceTokens whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\DeviceTokens\DeviceTokens whereOs($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\DeviceTokens\DeviceTokens whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\DeviceTokens\DeviceTokens whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 
 class DeviceTokens extends BaseEloquentModel
