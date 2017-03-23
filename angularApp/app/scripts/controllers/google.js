@@ -1,292 +1,9 @@
 'use strict';
 
-function mapCtrl($scope, COLORS) {
+function mapCtrl($scope, apiClient) {
 
   var isInternetExplorer11 = navigator.userAgent.toLowerCase().indexOf('trident') > -1;
   var markerUrl = (isInternetExplorer11) ? 'img/cd-icon-location.png' : 'img/cd-icon-location.svg';
-
-  var mainColor = COLORS.dark,
-    saturationValue = -20,
-    brightnessValue = 5;
-
-  var style = [
-    {
-      //set saturation for the labels on the map
-      elementType: 'labels',
-      stylers: [
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    { //poi stands for point of interest - don't show these lables on the map
-      featureType: 'poi',
-      elementType: 'labels',
-      stylers: [
-        {
-          visibility: 'off'
-                }
-            ]
-        },
-    {
-      //don't show highways lables on the map
-      featureType: 'road.highway',
-      elementType: 'labels',
-      stylers: [
-        {
-          visibility: 'off'
-                }
-            ]
-        },
-    {
-      //don't show local road lables on the map
-      featureType: 'road.local',
-      elementType: 'labels.icon',
-      stylers: [
-        {
-          visibility: 'off'
-                }
-            ]
-        },
-    {
-      //don't show arterial road lables on the map
-      featureType: 'road.arterial',
-      elementType: 'labels.icon',
-      stylers: [
-        {
-          visibility: 'off'
-                }
-            ]
-        },
-    {
-      //don't show road lables on the map
-      featureType: 'road',
-      elementType: 'geometry.stroke',
-      stylers: [
-        {
-          visibility: 'off'
-                }
-            ]
-        },
-        //style different elements on the map
-    {
-      featureType: 'transit',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'poi',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'poi.government',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'poi.sport_complex',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'poi.attraction',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'poi.business',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'transit',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'transit.station',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'landscape',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-
-        },
-    {
-      featureType: 'road',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        },
-    {
-      featureType: 'water',
-      elementType: 'geometry',
-      stylers: [
-        {
-          hue: mainColor
-                },
-        {
-          visibility: 'on'
-                },
-        {
-          lightness: brightnessValue
-                },
-        {
-          saturation: saturationValue
-                }
-            ]
-        }
-    ];
-
 
   $scope.myMarkers = [];
 
@@ -295,7 +12,6 @@ function mapCtrl($scope, COLORS) {
     center: new google.maps.LatLng(35.784, -78.670),
     zoom: 15,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    styles: style
   };
 
   $scope.addMarker = function ($event, $params) {
@@ -305,6 +21,35 @@ function mapCtrl($scope, COLORS) {
       icon: markerUrl
     }));
   };
+
+  $scope.buildPolyLine = function () {
+      var map = new google.maps.Map(document.getElementById('google-container'), {
+          zoom: 3,
+          center: {lat: 0, lng: -180},
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+      });
+
+      var locationsPromise = apiClient.getLocations();
+      locationsPromise.then(function (response) {
+       console.log(response.data);
+      });
+
+      var flightPlanCoordinates = [
+          {lat: 37.772, lng: -122.214},
+          {lat: 21.291, lng: -157.821},
+          {lat: -18.142, lng: 178.431},
+          {lat: -27.467, lng: 153.027}
+      ];
+      var flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+      });
+
+      flightPath.setMap(map);
+  }
 
   $scope.setZoomMessage = function (zoom) {
     $scope.zoomMessage = 'You just zoomed to ' + zoom + '!';
@@ -325,4 +70,4 @@ function mapCtrl($scope, COLORS) {
 
 angular
   .module('app')
-  .controller('mapCtrl', ['$scope', 'COLORS', mapCtrl]);
+  .controller('mapCtrl', ['$scope' , 'apiClient', mapCtrl]);

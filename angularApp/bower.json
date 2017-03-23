@@ -1,5 +1,5 @@
 {
-  "name": "Staff Management",
+  "name": "staff-management",
   "private": true,
   "version": "1.0.0",
   "dependencies": {
@@ -12,6 +12,8 @@
     "angular-xeditable": "~0.1.9",
     "angular-nvd3": "~0.1.1",
     "angular-messages": "*",
+    "angular-material": "*",
+    "angular-aria": "*",
     "angles": "*",
     "angular-summernote": "~0.3.2",
     "perfect-scrollbar": "~0.6.1",

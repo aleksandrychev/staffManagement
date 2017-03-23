@@ -1,2 +1,2 @@
 CONFIG = [];
-CONFIG["apiUrl"] = "http://sm.loc/api/v1/";
+CONFIG["apiUrl"] = "http://staff.aleksandrychev.name/api/v1/";

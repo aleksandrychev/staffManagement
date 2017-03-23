@@ -56,6 +56,21 @@ function restApiCalls($q, $http) {
       return deferred.promise;
   };
 
+
+    apiMethods.getLocations = function () {
+
+        var deferred = $q.defer();
+        $http.get(CONFIG["apiUrl"] + 'location',  {
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem("apiToken")}
+        }).success(function (data, status, headers, config) {
+            deferred.resolve(data.data);
+        })
+            .error(function (data, status, header, config) {
+                deferred.reject(data.data);
+            });
+        return deferred.promise;
+    };
+
   return apiMethods;
 }
 

@@ -5,8 +5,7 @@
   "dependencies": {},
   "repository": {},
   "devDependencies": {
-    "angular-messages": "*",
-    "grunt": "^1.0.1",
+    "grunt": "^0.4.5",
     "grunt-autoprefixer": "^2.0.0",
     "grunt-concurrent": "^1.0.0",
     "grunt-contrib-clean": "^0.6.0",
@@ -33,8 +32,7 @@
     "karma-jasmine": "^0.3.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "load-grunt-tasks": "^3.1.0",
-    "angular-material": "^1.0.0",
-    "angular-arial": "^1.0.0"
+    "angular-messages": "*"
   },
   "engines": {
     "node": ">=0.10.0"

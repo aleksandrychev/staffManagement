@@ -31,9 +31,9 @@ app
 
       var user = JSON.parse(localStorage.getItem("user"));
       $scope.user = {
-        fname:  user.name,
-        lname:  user.email,
-        jobDesc: user.role,
+        // fname:  user.name,
+        // lname:  user.email,
+        // jobDesc: user.role,
         avatar: 'images/avatar.jpg',
       };
 

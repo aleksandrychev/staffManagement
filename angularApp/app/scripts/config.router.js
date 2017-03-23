@@ -805,7 +805,9 @@ app
                     'vendor/angular-ui-map/ui-map.min.js'
                   ]
                 }]).then(function () {
-                return $ocLazyLoad.load('scripts/controllers/google.js');
+                return $ocLazyLoad.load('scripts/controllers/google.js').then(function () {
+                    return $ocLazyLoad.load('scripts/services/apiClient.js');
+                });
               });
             }]
           },
