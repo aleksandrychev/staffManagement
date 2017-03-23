@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 class StaffLocations extends BaseApiController
 {
 
+
+    public function index(Request $request)
+    {
+        return \App\Models\StaffLocations\StaffLocations::all();
+//    var_dump($request);exit;
+//        $locations =  \App\Models\StaffLocations\StaffLocations::query()->first();
+//        return $locations;
+    }
+
+
     public function store(Request $request)
     {
         $model = new \App\Models\StaffLocations\StaffLocations();
