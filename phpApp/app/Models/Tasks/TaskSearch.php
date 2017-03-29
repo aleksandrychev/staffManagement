@@ -38,7 +38,10 @@ class TaskSearch extends BaseSearchModel
         }
         $this->fillVariables($this->request);
 
-        $query->orderBy($this->orderBy, $this->orderType);
+        if($this->orderBy){
+            $query->orderBy($this->orderBy, $this->orderType);
+        }
+
 
         if ($this->name) {
             $query->where('name', 'like', SearchHelper::prepareLikeValue($this->name));
