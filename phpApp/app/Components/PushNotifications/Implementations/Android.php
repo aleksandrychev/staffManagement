@@ -19,6 +19,7 @@ class Android implements IPushNotifications
     function send($token, $title, $body, $data= [])
     {
         $server_key =  config('params.FirebaseToken');
+
         $client = new Client();
         $client->setApiKey($server_key);
         $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
@@ -32,7 +33,6 @@ class Android implements IPushNotifications
             ->setNotification($notification)
             ->setData($data)
         ;
-
        $client->send($message);
     }
 
