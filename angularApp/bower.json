@@ -46,7 +46,9 @@
     "angular-flot": "~0.0.6",
     "fullcalendar": "~2.3.1",
     "jquery.easy-pie-chart": "~2.1.6",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "angular-material": "*",
+    "angular-aria": "*"
   },
   "appPath": "app",
   "moduleName": "app",

@@ -30,12 +30,16 @@ app
       };
 
       var user = JSON.parse(localStorage.getItem("user"));
-      $scope.user = {
-        // fname:  user.name,
-        // lname:  user.email,
-        // jobDesc: user.role,
-        avatar: 'images/avatar.jpg',
-      };
+       if(user != null)
+       {
+           $scope.user = {
+               fname:  user.name,
+               lname:  user.email,
+               jobDesc: user.role,
+               avatar: 'images/avatar.jpg',
+           };
+       }
+
 
       if (angular.isDefined($localStorage.layout)) {
         $scope.app.layout = $localStorage.layout;
