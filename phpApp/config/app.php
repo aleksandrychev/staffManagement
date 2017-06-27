@@ -178,8 +178,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
         DCN\RBAC\RBACServiceProvider::class,
+        Orchid\Socket\Providers\SocketServiceProvider::class
 
     ],
 
