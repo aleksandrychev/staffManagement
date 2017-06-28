@@ -1,5 +1,6 @@
 <?php namespace App\Http\Sockets;
 
+use App\Models\StaffLocations\StaffLocations;
 use App\Models\Users\User;
 use Orchid\Socket\BaseSocketListener;
 use Ratchet\ConnectionInterface;
@@ -7,11 +8,11 @@ use Ratchet\ConnectionInterface;
 /**
  * Class GpsSocket
  * @package App\Http\Sockets
- * @todo add checking permission who can view courier
+ * @todo add checking permission who can view staff
  */
 class GpsSocket extends BaseSocketListener {
 
- protected $clients;
+    protected $clients;
 
     public function __construct() {
         $this->clients = new \SplObjectStorage;
@@ -22,17 +23,29 @@ class GpsSocket extends BaseSocketListener {
          * @todo move auth checking to some service
          */
         $token = $conn->WebSocket->request->getQuery()->get('token');
-        $user = User::query()->where('api_token', '=', $token)->find();
-        if($user){
+
+        if(User::query()->where('api_token', '=', $token)->first() != null){
             $this->clients->attach($conn);
         }else{
+            $conn->send('You are not authentificated.');
             $conn->close();
         }
 
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-        $from->send('hi');
+        if(!is_numeric($msg)){
+            $from->send('Send please numeric id');
+        } else{
+            $staffId = intval($msg);
+            $location = StaffLocations::query()->where('user_id', '=', $staffId)->orderBy('id', 'DESC')->first();
+            if($location != null){
+                $from->send(json_encode(['lat' => $location->lat, 'lon' => $location->lon]));
+            }else{
+                $from->send('Location not found.');
+            }
+        }
+
     }
 
     public function onClose(ConnectionInterface $conn) {
