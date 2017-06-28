@@ -1,8 +1,14 @@
 <?php namespace App\Http\Sockets;
 
+use App\Models\Users\User;
 use Orchid\Socket\BaseSocketListener;
 use Ratchet\ConnectionInterface;
 
+/**
+ * Class GpsSocket
+ * @package App\Http\Sockets
+ * @todo add checking permission who can view courier
+ */
 class GpsSocket extends BaseSocketListener {
 
  protected $clients;
@@ -12,14 +18,21 @@ class GpsSocket extends BaseSocketListener {
     }
 
     public function onOpen(ConnectionInterface $conn) {
-        $this->clients->attach($conn);
+        /**
+         * @todo move auth checking to some service
+         */
+        $token = $conn->WebSocket->request->getQuery()->get('token');
+        $user = User::query()->where('api_token', '=', $token)->find();
+        if($user){
+            $this->clients->attach($conn);
+        }else{
+            $conn->close();
+        }
+
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-
-        $token = $from->WebSocket->request->getQuery()->get('token');
-        $from->send($token);
-
+        $from->send('hi');
     }
 
     public function onClose(ConnectionInterface $conn) {
